@@ -15,7 +15,7 @@
 		if (content == null)
 			content = "default.htm";
 		else
-			content = request.getParameter("content");
+			content = request.getParameter("content").replaceAll("[^\\w\\d\\._]", "");
 			content = "static/"+content;
 		%>
 		
