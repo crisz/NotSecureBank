@@ -1,6 +1,8 @@
 package com.notsecurebank.servlet;
 
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -71,6 +73,8 @@ public class LoginServlet extends HttpServlet {
         try {
             Cookie accountCookie = ServletUtil.establishSession(username, session);
             response.addCookie(accountCookie);
+            Random random = new SecureRandom();
+            request.getSession().setAttribute("csrfToken", random.nextLong() + "");
             response.sendRedirect(request.getContextPath() + "/bank/main.jsp");
         } catch (Exception ex) {
             LOG.error(ex.toString());

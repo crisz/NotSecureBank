@@ -36,7 +36,7 @@
 		<div class="fl" style="width: 99%;">
 		
 		<form id="tForm" name="tForm" method="post" action="doTransfer" onsubmit="return (confirminput(tForm));">
-		
+			<input type="hidden" name="csrfToken" value="<%=request.getSession().getAttribute("csrfToken") %>">
 		<h1>Transfer Funds</h1>
 		
 		<table cellSpacing="0" cellPadding="1" width="100%" border="0">

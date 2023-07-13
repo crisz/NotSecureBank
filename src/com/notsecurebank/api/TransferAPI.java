@@ -33,6 +33,12 @@ public class TransferAPI extends NotSecureBankAPI {
         try {
             myJson = new JSONObject(bodyJSON);
             // Get the transaction parameters
+            
+            String inputCsrfToken = myJson.get("csrfToken").toString();
+            String sessionCsrfToken = (String)request.getSession().getAttribute("csrfToken");
+            if (!inputCsrfToken.equals(sessionCsrfToken)) {
+                return Response.status(403).entity("{\"Error\": \"Invalid request\"}").build();
+            }
             creditActId = Long.parseLong(myJson.get("toAccount").toString());
             fromAccount = myJson.get("fromAccount").toString();
             amount = Double.parseDouble(myJson.get("transferAmount").toString());
