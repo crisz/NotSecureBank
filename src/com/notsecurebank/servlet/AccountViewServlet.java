@@ -1,6 +1,9 @@
 package com.notsecurebank.servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -50,7 +53,11 @@ public class AccountViewServlet extends HttpServlet {
             String startTime = request.getParameter("startDate");
             String endTime = request.getParameter("endDate");
 
-            LOG.info("Transactions within '" + startTime + "' and '" + endTime + "'.");
+            LocalDate startDate = LocalDate.parse(startTime);
+            LocalDate endDate = LocalDate.parse(endTime);
+
+
+            LOG.info("Transactions within '" + startDate + "' and '" + endDate + "'.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/bank/transaction.jsp?" + ((startTime != null) ? "&startTime=" + startTime : "") + ((endTime != null) ? "&endTime=" + endTime : ""));
             dispatcher.forward(request, response);
         }
