@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.notsecurebank.model.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
@@ -22,6 +23,13 @@ public class AdminServlet extends HttpServlet {
 
         String message = null;
 
+        Object user = request.getSession().getAttribute(ServletUtil.SESSION_ATTR_USER);
+        if (user == null || !(user instanceof User)) {
+            throw new ServletException("Not logged");
+        } else if (!((User) user).getRole().equals(User.Role.Admin)) {
+            throw new ServletException("Unauthorized");
+        }
+        
         // add account
         if (request.getRequestURL().toString().endsWith("addAccount")) {
             LOG.info("addAccount");
