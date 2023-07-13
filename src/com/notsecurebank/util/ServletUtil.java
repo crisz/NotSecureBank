@@ -247,16 +247,9 @@ public class ServletUtil {
     public static boolean isPreApprovedForGoldVisa(HttpServletRequest request) {
         LOG.debug("isPreApprovedForGoldVisa");
 
-        boolean isPreApprovedForGoldVisa = false;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length > 0) {
-            for (Cookie c : cookies) {
-                if ("preApprovedForGoldVisa".equals(c.getName()) && "true".equals(c.getValue())) {
-                    isPreApprovedForGoldVisa = true;
-                    break;
-                }
-            }
-        }
+        // Questa property di sessione non viene settata da nessuna parte
+        // Si suppone che al posto del setCookie venga fatto un getSession().setAttribute(...) nel punto corretto
+        boolean isPreApprovedForGoldVisa = (Boolean)request.getSession().getAttribute("isPreApprovedForGoldVisa");
 
         LOG.info("Is pre-approved for Gold Visa? " + isPreApprovedForGoldVisa);
         return isPreApprovedForGoldVisa;
