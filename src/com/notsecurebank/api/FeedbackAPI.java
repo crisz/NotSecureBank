@@ -18,6 +18,8 @@ import com.notsecurebank.model.Feedback;
 import com.notsecurebank.util.OperationsUtil;
 import com.notsecurebank.util.ServletUtil;
 
+import static com.notsecurebank.util.ServletUtil.sanitizeHtmlWithRegex;
+
 @Path("/feedback")
 public class FeedbackAPI extends NotSecureBankAPI {
 
@@ -45,10 +47,10 @@ public class FeedbackAPI extends NotSecureBankAPI {
         String comments;
 
         try {
-            name = (String) myJson.get("name");
-            email = (String) myJson.get("email");
-            subject = (String) myJson.get("subject");
-            comments = (String) myJson.get("message");
+            name = sanitizeHtmlWithRegex((String) myJson.get("name"));
+            email = sanitizeHtmlWithRegex((String) myJson.get("email"));
+            subject = sanitizeHtmlWithRegex((String) myJson.get("subject"));
+            comments = sanitizeHtmlWithRegex((String) myJson.get("message"));
         } catch (JSONException e) {
             LOG.error(e.toString());
             return Response.status(400).entity("{\"Error\": \"Body does not contain all the correct attributes\"}").build();
