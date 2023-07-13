@@ -85,7 +85,7 @@ public class FeedbackAPI extends NotSecureBankAPI {
 
         Feedback feedbackDetails = ServletUtil.getFeedback(Long.parseLong(feedbackId));
         String response = "";
-        response += "{\"name\":\"" + feedbackDetails.getName() + "\"," + "\n\"email\":\"" + feedbackDetails.getEmail() + "\"," + "\n\"subject\":\"" + feedbackDetails.getSubject() + "\"," + "\n\"message\":\"" + feedbackDetails.getMessage() + "\"}";
+        response += "{\"name\":\"" + sanitizeHtmlWithRegex(feedbackDetails.getName()) + "\"," + "\n\"email\":\"" + sanitizeHtmlWithRegex(feedbackDetails.getEmail()) + "\"," + "\n\"subject\":\"" + sanitizeHtmlWithRegex(feedbackDetails.getSubject()) + "\"," + "\n\"message\":\"" + sanitizeHtmlWithRegex(feedbackDetails.getMessage()) + "\"}";
 
         return Response.status(200).entity(response).build();
 
